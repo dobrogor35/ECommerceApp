@@ -10,7 +10,7 @@
   <!-- UPDATE: using css version of font awesome so no need for kit -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script src="index.js" defer></script>
-  <script src="books.js"></script>
+  <script src="books.js" defer></script>
 </head>
 
 <body id="books__body">
@@ -56,7 +56,7 @@
             <h2 class="section__title books__header--title">
               All <span class="purple">Books</span>
             </h2>
-            <select id="filter">
+            <select id="filter" onchange="filterBooks(event)">
               <option value="" disabled selected>Sort</option>
               <option value="LOW_TO_HIGH">Price Low to High</option>
               <option value="HIGH_TO_LOW">Price High to Low</option>
