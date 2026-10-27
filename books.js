@@ -1,13 +1,25 @@
-function renderBooks() {
+function renderBooks(filter) {
   const booksWrapper = document.querySelector(".books");
 
   const books = getBooks();
+
+  
+  if (filter === 'LOW_TO_HIGH') {
+    books.sort((a, b) => (a.salePrice || a.originalPrice) - (b.salePrice || b.originalPrice));   
+}
+else if (filter === 'HIGH_TO_LOW') {
+  books.sort((a, b) => (b.salePrice || b.originalPrice) - (a.salePrice || a.originalPrice));   
+}
+else if (filter === 'RATING') {
+    books.sort((a, b) => b.rating - a.rating);   
+}
+
 
 
 const booksHtml = books.map((book) => {
  return `<div class="book">
               <figure class="book__img--wrapper">
-                <img src="${book.url}" alt=" " class="book__title">
+                <img src="${book.url}" alt=" " class="book__img">
               </figure>
               
               <div class="book__title">
@@ -15,14 +27,12 @@ const booksHtml = books.map((book) => {
               
               </div>
               <div class="book__ratings">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star-half-alt"></i>
+             ${getRatingHTML(book.rating)}
               </div>
               <div class="book__price">
-                <span>$${book.originalPrice.toFixed(2)}</span>
+              ${priceHTML(book.originalPrice, book.salePrice)}
+                
+                // <span>$${book.originalPrice.toFixed(2)}</span>
               </div>
             </div>`;
 })
@@ -34,8 +44,30 @@ console.log(booksHtml)
 
 }
 
+function priceHTML(originalPrice, salePrice) {
+  if (!salePrice) {
+    return `$${originalPrice.toFixed(2)}`
+  }
+  return `<span class="book__price--normal">$${originalPrice.toFixed(2)}</span>$${salePrice.toFixed(2)}`
+}
+
+function getRatingHTML(rating) {
+let ratingHTML = ' ';
+for (let i = 0; i < Math.floor(rating); ++i) {
+  ratingHTML += '<i class="fas fa-star"></i>';
+}
+if (!Number.isInteger(rating)) {
+  ratingHTML += '<i class="fas fa-star-half-alt"></i>';
+}
+
+  return ratingHTML;
+}
+
+
 function filterBooks(event) {
-  console.log(event.target.value)
+   renderBooks(event.target.value);
+  
+  
 }
 
 setTimeout(() => {
