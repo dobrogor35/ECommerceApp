@@ -16,6 +16,7 @@ else if (filter === 'RATING') {
 
 
 
+
 const booksHtml = books.map((book) => {
  return `<div class="book">
               <figure class="book__img--wrapper">
